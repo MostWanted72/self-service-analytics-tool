@@ -27,14 +27,13 @@ import {
   FileSpreadsheet,
 } from 'lucide-react';
 import { useDatasetStore } from '../../../store/datasetStore';
-import { useChartStore, ChartType, AggregationType, FilterState } from '../../../store/chartStore';
-import { resetAnalyticsSession } from '../../../store/resetSession';
+import { useChartStore, AggregationType, FilterState } from '../../../store/chartStore';
 import { filterDataset } from '../../../features/analytics/filterDataset';
 import { aggregateData } from '../../../features/analytics/aggregateData';
-import { ChartFactory } from '../../../features/analytics/chartFactory';
 import { Column } from '../../../types/dataset';
 import styles from './Explore.module.scss';
 import clsx from 'clsx';
+import GraphHandler from '@/components/graphHandler/GraphHandler';
 
 // --- Draggable Field Component ---
 interface DraggableFieldProps {
@@ -696,28 +695,7 @@ export default function ExplorePage() {
           {/* COLUMN 2: CENTER CONTENT (Workspace Area) */}
           <section className={styles.centerWorkspace} id="explore-center-workspace" aria-label="Visualization Workspace">
             {xAxis && yAxis ? (
-              <div className={styles.visualizationCompleteContainer} id="explore-complete-state">
-                <div className={styles.completeCard}>
-                  <div className={styles.completeIconWrapper}>
-                    <Check size={24} className={styles.completeSuccessIcon} />
-                  </div>
-                  <h2 className={styles.completeTitle}>Visualization configuration complete.</h2>
-                  <p className={styles.completeSubtitle}>
-                    Configured with X-Axis: <strong>{xAxis.name}</strong>, Y-Axis: <strong>{yAxis.name}</strong>, Aggregation: <strong>{aggregation}</strong>, Chart Type: <strong>{chartType}</strong>.
-                  </p>
-                  
-                  {/* Real Live Chart Renderer */}
-                  <div style={{ width: '100%', marginTop: '16px' }} id="chart-rendering-canvas">
-                    <ChartFactory
-                      chartType={chartType}
-                      data={aggregatedData}
-                      xAxis={xAxis}
-                      yAxis={yAxis}
-                      aggregation={aggregation}
-                    />
-                  </div>
-                </div>
-              </div>
+              <GraphHandler />
             ) : (
               <div className={styles.emptyStateContainer} id="explore-empty-state">
                 <div className={styles.illustrationWrapper}>
