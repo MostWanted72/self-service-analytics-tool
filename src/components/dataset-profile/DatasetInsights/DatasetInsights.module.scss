@@ -1,0 +1,112 @@
+/* src/components/dataset-profile/DatasetInsights/DatasetInsights.module.scss */
+
+.card {
+  background-color: var(--color-card-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+  height: 100%;
+}
+
+.cardHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cardTitle {
+  font-family: var(--font-sans);
+  font-size: 1.0625rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  letter-spacing: -0.01em;
+}
+
+.cardSubtitle {
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  color: var(--color-text-secondary);
+}
+
+.insightsList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.insightItem {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md);
+  background-color: #fafafa; /* Modern flat grey background */
+  border: 1px solid #f1f5f9;
+  border-radius: var(--radius-md);
+  transition: background-color var(--transition-fast) ease, border-color var(--transition-fast) ease;
+
+  &:hover {
+    background-color: #f8fafc;
+    border-color: var(--color-border-hover);
+  }
+}
+
+.iconWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1px; /* Align perfectly with text baseline */
+}
+
+.iconSuccess {
+  color: #10b981; /* Emerald 500 */
+}
+
+.iconInfo {
+  color: #3b82f6; /* Blue 500 */
+}
+
+.iconWarning {
+  color: #f59e0b; /* Amber 500 */
+}
+
+.message {
+  font-family: var(--font-sans);
+  font-size: 0.84375rem;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  line-height: 1.5;
+}
+
+.toggleButton {
+  align-self: flex-start;
+  margin-top: auto;
+  padding-top: var(--spacing-sm);
+  background: none;
+  border: none;
+  padding-bottom: 0;
+  padding-left: 0;
+  padding-right: 0;
+  font-family: var(--font-sans);
+  font-size: 0.84375rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  cursor: pointer;
+  transition: color var(--transition-fast) ease;
+  display: inline-flex;
+  align-items: center;
+
+  &:hover {
+    color: var(--color-primary-dark);
+    text-decoration: underline;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 4px;
+    border-radius: var(--radius-xs);
+  }
+}

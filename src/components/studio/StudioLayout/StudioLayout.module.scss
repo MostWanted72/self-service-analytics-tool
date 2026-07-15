@@ -1,0 +1,89 @@
+/* src/components/studio/StudioLayout/StudioLayout.module.scss */
+
+.wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-bg);
+}
+
+.mainContent {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--max-width-content);
+  margin: 0 auto;
+  padding: var(--spacing-xxl) var(--spacing-xl);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+
+  @media (max-width: 640px) {
+    padding: var(--spacing-xl) var(--spacing-md);
+  }
+}
+
+/* Fallback Card Styles */
+.fallbackContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  padding: var(--spacing-xxl) 0;
+  min-height: 350px;
+}
+
+.fallbackCard {
+  background-color: var(--color-card-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xxl);
+  max-width: 480px;
+  width: 100%;
+  text-align: center;
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.errorIconContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  background-color: #fef2f2; /* Red 50 */
+  color: #ef4444; /* Red 500 */
+  border-radius: 50%;
+  margin-bottom: var(--spacing-lg);
+}
+
+.fallbackTitle {
+  font-family: var(--font-sans);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-sm);
+  letter-spacing: -0.02em;
+}
+
+.fallbackText {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  margin-bottom: var(--spacing-xl);
+}
+
+.fallbackActions {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}

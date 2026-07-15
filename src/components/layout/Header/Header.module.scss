@@ -1,0 +1,86 @@
+/* src/components/layout/Header/Header.module.scss */
+
+.header {
+  width: 100%;
+  border-bottom: 1px solid var(--color-border);
+  background-color: var(--color-card-bg);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  backdrop-filter: blur(8px);
+  background-color: rgba(255, 255, 255, 0.85);
+}
+
+.container {
+  max-width: var(--max-width-content);
+  margin: 0 auto;
+  padding: var(--spacing-md) var(--spacing-xl);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  @media (max-width: 640px) {
+    padding: var(--spacing-md);
+  }
+}
+
+.logoGroup {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  user-select: none;
+}
+
+.logoIconContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background-color: var(--color-primary-light);
+  border-radius: var(--radius-sm);
+  color: var(--color-primary);
+}
+
+.logoIcon {
+  width: 18px;
+  height: 18px;
+}
+
+.logoText {
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: var(--color-text-primary);
+}
+
+.privacyMessage {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  background-color: #f1f5f9;
+  padding: 6px var(--spacing-md);
+  border-radius: 9999px;
+  transition: background-color var(--transition-fast);
+
+  &:hover {
+    background-color: #e2e8f0;
+  }
+
+  @media (max-width: 640px) {
+    span {
+      display: none; /* Hide text on mobile, just icon is fine, or keep it simple */
+    }
+    padding: 6px;
+    border-radius: 50%;
+  }
+}
+
+.privacyIcon {
+  width: 16px;
+  height: 16px;
+  color: var(--color-primary-accent);
+}

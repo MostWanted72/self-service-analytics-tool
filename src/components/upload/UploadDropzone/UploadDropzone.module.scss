@@ -1,0 +1,233 @@
+/* src/components/upload/UploadDropzone/UploadDropzone.module.scss */
+
+.hiddenInput {
+  display: none;
+}
+
+.dropzone {
+  width: 100%;
+  border: 2px dashed rgba(99, 102, 241, 0.4); /* Soft indigo dashed border */
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xxl) var(--spacing-xl);
+  background-color: transparent;
+  cursor: pointer;
+  outline: none;
+  transition: border-color var(--transition-normal), background-color var(--transition-normal), box-shadow var(--transition-normal), transform var(--transition-normal);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+
+  &:hover {
+    border-color: var(--color-primary-accent);
+    background-color: rgba(79, 70, 229, 0.02);
+  }
+
+  &:focus-visible {
+    border-color: var(--color-border-focus);
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
+  }
+}
+
+.dragging {
+  border-color: var(--color-primary);
+  background-color: rgba(79, 70, 229, 0.06) !important;
+  border-style: solid;
+  transform: scale(1.01);
+}
+
+.uploading {
+  border-color: var(--color-primary);
+  background-color: rgba(79, 70, 229, 0.01);
+  cursor: wait;
+  border-style: dashed;
+}
+
+.errorState {
+  border-color: #ef4444; /* red-500 */
+  background-color: rgba(239, 68, 68, 0.02);
+  cursor: default;
+
+  &:hover {
+    border-color: #ef4444;
+    background-color: rgba(239, 68, 68, 0.02);
+  }
+}
+
+.successState {
+  border-color: var(--color-success);
+  background-color: var(--color-success-bg);
+  cursor: wait;
+}
+
+.contentContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--spacing-md);
+  max-width: 420px;
+  width: 100%;
+}
+
+/* File Icon Illustration */
+.illustrationContainer {
+  margin-bottom: var(--spacing-sm);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.fileIcon {
+  position: relative;
+  width: 56px;
+  height: 72px;
+  background-color: #e0e7ff; /* Very soft lavender/indigo */
+  border-radius: var(--radius-sm);
+  border-top-right-radius: 20px; /* Fold effect */
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 12px;
+  box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.1);
+  transition: transform var(--transition-normal);
+
+  .dropzone:hover & {
+    transform: translateY(-4px);
+  }
+}
+
+.fileFold {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 20px;
+  height: 20px;
+  background-color: #c7d2fe; /* Muted contrast fold */
+  border-bottom-left-radius: var(--radius-sm);
+  border-top-right-radius: var(--radius-sm);
+}
+
+.csvBadge {
+  background-color: var(--color-primary);
+  color: #ffffff;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  padding: 4px var(--spacing-sm);
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(79, 70, 229, 0.2);
+  margin-bottom: 10px;
+}
+
+.primaryText {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  line-height: 1.4;
+}
+
+.secondaryText {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.tertiaryText {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+  max-width: 320px;
+}
+
+.formatIndicator {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  margin-top: var(--spacing-sm);
+}
+
+.checkIcon {
+  width: 16px;
+  height: 16px;
+  color: var(--color-success);
+}
+
+/* Spinner and Loaders */
+.spinnerContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: var(--color-primary-light);
+  margin-bottom: var(--spacing-xs);
+}
+
+.spinnerIcon {
+  width: 24px;
+  height: 24px;
+  color: var(--color-primary);
+  animation: spin 1s linear infinite;
+}
+
+/* Success layout components */
+.successIconContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: var(--color-success-bg);
+  margin-bottom: var(--spacing-xs);
+}
+
+.successIcon {
+  width: 24px;
+  height: 24px;
+  color: var(--color-success);
+}
+
+/* Error layout components */
+.errorIconContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: #fef2f2; /* Red-50 */
+  margin-bottom: var(--spacing-xs);
+}
+
+.errorIcon {
+  width: 24px;
+  height: 24px;
+  color: #ef4444; /* Red-500 */
+}
+
+.errorDescription {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+  max-width: 340px;
+  margin-bottom: var(--spacing-sm);
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

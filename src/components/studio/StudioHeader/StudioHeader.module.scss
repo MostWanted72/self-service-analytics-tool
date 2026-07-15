@@ -1,0 +1,98 @@
+/* src/components/studio/StudioHeader/StudioHeader.module.scss */
+
+.header {
+  width: 100%;
+  height: 64px;
+  background-color: var(--color-card-bg);
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--max-width-content);
+  margin: 0 auto;
+  padding: 0 var(--spacing-xl);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  @media (max-width: 640px) {
+    padding: 0 var(--spacing-md);
+  }
+}
+
+.brandGroup {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.logoContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background-color: var(--color-primary-light);
+  color: var(--color-primary);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-sm);
+}
+
+.logoIcon {
+  color: var(--color-primary);
+}
+
+.brandText {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+.productName {
+  font-family: var(--font-sans);
+  font-size: 1.0625rem;
+  font-weight: 800;
+  color: var(--color-text-primary);
+  letter-spacing: -0.02em;
+}
+
+.badge {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background-color: #f1f5f9; /* Slate-100 */
+  color: var(--color-text-secondary);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.actionGroup {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+
+  @media (max-width: 480px) {
+    gap: var(--spacing-xs);
+  }
+}
+
+.resetButton {
+  @media (max-width: 580px) {
+    span {
+      display: none; /* Hide text on mobile but keep icon if possible */
+    }
+    /* Let's keep it visible but simpler */
+  }
+}
+
+.uploadButton {
+  font-weight: 600;
+}

@@ -1,0 +1,84 @@
+/* src/components/studio/StudioTabs/StudioTabs.module.scss */
+
+.tabsNav {
+  width: 100%;
+  background-color: var(--color-card-bg);
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--max-width-content);
+  margin: 0 auto;
+  padding: 0 var(--spacing-xl);
+
+  @media (max-width: 640px) {
+    padding: 0 var(--spacing-md);
+  }
+}
+
+.tabsList {
+  display: flex;
+  gap: var(--spacing-lg);
+  margin-bottom: -1px; /* Align border overlaps precisely */
+
+  @media (max-width: 480px) {
+    gap: var(--spacing-md);
+  }
+}
+
+.tabLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-md) 0;
+  position: relative;
+  text-decoration: none;
+  cursor: pointer;
+  outline: none;
+  transition: color var(--transition-fast) ease;
+  user-select: none;
+  min-height: 48px; /* Ensures spacious interactive touch target area */
+
+  /* Default inactive text */
+  color: var(--color-text-secondary);
+
+  &:hover {
+    color: var(--color-text-primary);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: -2px;
+    border-radius: var(--radius-sm);
+  }
+}
+
+.tabText {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.active {
+  color: var(--color-primary);
+  font-weight: 600;
+
+  &:hover {
+    color: var(--color-primary);
+  }
+}
+
+/* Slide in, elegant flat underline indicator under active tab */
+.activeIndicator {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: var(--color-primary);
+  border-radius: 1px;
+}
