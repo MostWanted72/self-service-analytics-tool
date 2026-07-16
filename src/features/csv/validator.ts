@@ -49,19 +49,19 @@ export function validateCSVData(
   }
 
   // 3. Header validation
-  const validHeaders = headers.filter(h => h.trim() !== '');
-  if (validHeaders.length === 0) {
+  if (headers.length === 0) {
     return {
       isValid: false,
-      error: "We couldn't recognize this file as a valid CSV.",
+      error: "No column headers were found. Please ensure the first row of the CSV contains column names.",
     };
   }
 
-  // 3b. Duplicate header validation
-  if (findDuplicateColumns(headers)) {
+  const hasEmptyHeaders = headers.some(header => header.trim() === '');
+
+  if (hasEmptyHeaders) {
     return {
       isValid: false,
-      error: 'Your CSV contains duplicate column names. Please ensure every column has a unique name before uploading.',
+      error: "One or more column names are empty. Please ensure every column has a valid header before uploading.",
     };
   }
 
