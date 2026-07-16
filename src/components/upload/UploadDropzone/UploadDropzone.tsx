@@ -43,7 +43,7 @@ export const UploadDropzone: React.FC = () => {
       // Automatically navigate to Studio Workspace after 400ms delay
       setTimeout(() => {
         router.push('/studio');
-      }, 400);
+      }, 1000);
     } else {
       setError(result.error || "We couldn't recognize this file as a valid CSV.");
     }
