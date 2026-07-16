@@ -156,7 +156,6 @@ src/
 │
 ├── app/                     # Application routes
 │   ├── page.tsx             # Landing page (CSV Upload)
-│   ├── insights/            # Dataset insights overview
 │   └── studio/              # Dataset profile & analytics workspace
 │
 ├── components/              # Reusable UI and feature components
