@@ -1,6 +1,6 @@
 # Self-Service Analytics Tool
 
-A modern self-service analytics platform built with Next.js, React, and TypeScript that enables users to upload CSV datasets, automatically profile their data, and build interactive visualizations through an intuitive drag-and-drop interface—all without writing SQL or code.
+A lightweight self-service analytics platform built with Next.js and TypeScript that enables users to upload CSV datasets, automatically profile their data, and create interactive visualizations through an intuitive drag-and-drop interface.
 
 ---
 
