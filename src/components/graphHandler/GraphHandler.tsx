@@ -4,6 +4,7 @@ import { useMemo } from "react";
 import PieChart from "./PieChart";
 import BarChart from "./BarChart";
 import LineChart from "./LineChart";
+import styles from './GraphHandler.module.scss'
 
 interface ColumnInfo {
     name: string;
@@ -42,7 +43,6 @@ const processDatasetFilters = (
     if (!dataset?.data) return [];
     if (!filters || filters.length === 0) return dataset.data;
 
-    // Filter rows sequentially by evaluating each row against every configuration block
     return dataset.data.filter((row) => {
         return filters.every((filter) => {
             const columnName = filter.column?.name;
@@ -95,26 +95,27 @@ const GraphHandler = () => {
         filters: FilterObject[];
     };
 
-    const filteredData = useMemo(() => {
-        return processDatasetFilters(dataset, filters);
-    }, [dataset, filters]);
+    const filteredData = useMemo(
+        () => processDatasetFilters(dataset, filters),
+        [dataset, filters]
+    );
 
-    if (chartType === "pie") {
+    if (filteredData.length === 0) {
         return (
-            <PieChart dataset={filteredData} />
+            <div className={styles.emptyChartState}>
+                <h3>No data to display</h3>
+                <p>No records match the current filters. Try adjusting or clearing your filters.</p>
+            </div>
         );
     }
 
-    if (chartType === "bar") {
-        return (
-            <BarChart dataset={filteredData} />
-        );
-    }
-
-    if (chartType === "line") {
-        return (
-            <LineChart dataset={filteredData} />
-        );
+    switch (chartType) {
+        case "pie":
+            return <PieChart dataset={filteredData} />;
+        case "bar":
+            return <BarChart dataset={filteredData} />;
+        case "line":
+            return <LineChart dataset={filteredData} />;
     }
 
     return (

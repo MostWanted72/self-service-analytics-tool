@@ -1,0 +1,22 @@
+.emptyChartState {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 350px;
+    text-align: center;
+    color: #6b7280;
+
+    h3 {
+        margin: 0 0 8px;
+        font-size: 18px;
+        font-weight: 600;
+    }
+
+    p {
+        margin: 0;
+        max-width: 320px;
+        font-size: 14px;
+        line-height: 1.5;
+    }
+}

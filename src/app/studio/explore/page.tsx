@@ -1,7 +1,7 @@
 /* src/app/studio/explore/page.tsx */
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion } from 'motion/react';
 import {
@@ -111,7 +111,7 @@ function DroppableZone({ id, isActive, activeClass, className, children }: Dropp
 // --- Filter Card Component ---
 interface FilterCardProps {
   filter: FilterState;
-  getDimensionSubtype: (colName: string, sampleValues: string[]) => 'Text' | 'Date' | 'Boolean';
+  getDimensionSubtype: (colName: string, sampleValues: string[], test: boolean) => 'Text' | 'Date' | 'Boolean';
 }
 
 function FilterCard({ filter, getDimensionSubtype }: FilterCardProps) {
@@ -119,18 +119,38 @@ function FilterCard({ filter, getDimensionSubtype }: FilterCardProps) {
   const { updateFilter, removeFilter, clearFilterValues } = useChartStore();
   const { dataset } = useDatasetStore();
   const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const subtype = column.type === 'Dimension' ? getDimensionSubtype(column.name, column.sampleValues) : null;
+  const subtype = column.type === 'Dimension' ? getDimensionSubtype(column.name, column.sampleValues, true) : null;
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    }
+
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isOpen]);
 
   // Compute unique values from the dataset
   const uniqueValues = React.useMemo(() => {
     if (!dataset || !dataset.data) return [];
     if (column.type === 'Metric') return [];
-    
+
     if (subtype === 'Boolean') {
       return ['True', 'False'];
     }
-    
+
     const vals = dataset.data
       .map((row) => row[column.name])
       .filter((val) => val !== undefined && val !== null && val !== '');
@@ -160,7 +180,7 @@ function FilterCard({ filter, getDimensionSubtype }: FilterCardProps) {
   };
 
   return (
-    <div 
+    <div
       className={clsx(styles.filterConfigCard, { [styles.filterCardCollapsed]: isCollapsed })}
       id={`filter-card-${column.name.toLowerCase().replace(/\s+/g, '-')}`}
     >
@@ -219,7 +239,7 @@ function FilterCard({ filter, getDimensionSubtype }: FilterCardProps) {
       </div>
 
       {!isCollapsed && (
-        <div className={styles.filterCardBody}>
+        <div className={styles.filterCardBody} ref={dropdownRef}>
           {column.type === 'Dimension' && subtype === 'Date' && (
             <div className={styles.dateFilterRange}>
               <div className={styles.filterInputGroup}>
@@ -257,8 +277,8 @@ function FilterCard({ filter, getDimensionSubtype }: FilterCardProps) {
                   {selectedValues.length === 0
                     ? 'All Values'
                     : selectedValues.length === uniqueValues.length
-                    ? 'All Selected'
-                    : `${selectedValues.length} Selected`}
+                      ? 'All Selected'
+                      : `${selectedValues.length} Selected`}
                 </span>
                 <ChevronDown size={13} />
               </button>
@@ -287,8 +307,8 @@ function FilterCard({ filter, getDimensionSubtype }: FilterCardProps) {
                     {uniqueValues.map((val) => {
                       const isChecked = selectedValues.includes(val);
                       return (
-                        <label 
-                          key={val} 
+                        <label
+                          key={val}
                           className={styles.dropdownItem}
                           id={`label-checkbox-${column.name.toLowerCase().replace(/\s+/g, '-')}-${val.toLowerCase().replace(/\s+/g, '-')}`}
                         >
@@ -393,17 +413,13 @@ export default function ExplorePage() {
   const metricsCount = metrics.length;
 
   // Filter out fields that are already dropped in the axis or filters zones (unconditional)
-  const availableDimensions = React.useMemo(() => {
-    return dimensions.filter(
-      (col) => (!xAxis || xAxis.name !== col.name) && !filters.some((f) => f.column.name === col.name)
-    );
-  }, [dimensions, xAxis, filters]);
+const availableDimensions = React.useMemo(() => {
+  return dimensions;
+}, [dimensions]);
 
-  const availableMetrics = React.useMemo(() => {
-    return metrics.filter(
-      (col) => (!yAxis || yAxis.name !== col.name) && !filters.some((f) => f.column.name === col.name)
-    );
-  }, [metrics, yAxis, filters]);
+const availableMetrics = React.useMemo(() => {
+  return metrics;
+}, [metrics]);
 
   // 1. Filter the dataset based on active filters (unconditional)
   const filteredRows = React.useMemo(() => {
@@ -422,9 +438,8 @@ export default function ExplorePage() {
   }
 
   // Determine dimension subtype (Text, Date, or Boolean)
-  const getDimensionSubtype = (colName: string, sampleValues: string[] = []): 'Text' | 'Date' | 'Boolean' => {
+  const getDimensionSubtype = (colName: string, sampleValues: string[] = [], test = false): 'Text' | 'Date' | 'Boolean' => {
     const nameLower = colName.toLowerCase();
-
     if (
       nameLower.includes('date') ||
       nameLower.includes('time') ||
@@ -434,10 +449,12 @@ export default function ExplorePage() {
       nameLower.includes('day') ||
       nameLower.includes('month') ||
       nameLower.includes('year') ||
-      nameLower.includes('at')
+      nameLower.endsWith('_at') ||
+      nameLower.endsWith(' at')
     ) {
       return 'Date';
     }
+
 
     const nonNil = sampleValues.filter((v) => v !== undefined && v !== null && v.trim() !== '');
     if (nonNil.length > 0) {
@@ -449,7 +466,9 @@ export default function ExplorePage() {
         }
         return !isNaN(Date.parse(clean));
       });
+
       if (isAllDates) return 'Date';
+
 
       const isAllBooleans = nonNil.every((v) => {
         const clean = v.trim().toLowerCase();

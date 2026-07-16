@@ -39,8 +39,17 @@ const PieChart = ({ dataset }: PieChartProps) => {
         aggregation: 'SUM' | 'AVG' | 'COUNT' | 'MIN' | 'MAX';
     };
 
+
     useEffect(() => {
-        if (!xAxis?.name || !yAxis?.name || !dataset.length) return;
+        if (!xAxis?.name || !yAxis?.name) {
+            setPieData([]);
+            return;
+        }
+
+        if (dataset.length === 0) {
+            setPieData([]);
+            return;
+        }
 
         const groupedMap: Record<string, GroupMetrics> = {};
 
