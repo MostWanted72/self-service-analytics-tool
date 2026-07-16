@@ -141,7 +141,7 @@ const PieChart = ({ dataset }: PieChartProps) => {
                             />
                         ))}
                     </Pie>
-                    <Tooltip formatter={(value: number) => [`${value}%`, "Share"]} />
+                    <Tooltip formatter={(value: number | any) => [`${value}%`, "Share"]} />
                     <Legend verticalAlign="bottom" height={36} />
                 </RechartsPie>
             </ResponsiveContainer>

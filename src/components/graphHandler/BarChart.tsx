@@ -137,7 +137,7 @@ const BarChart = ({ dataset }: BarChartProps) => {
                     </YAxis>
                     <Tooltip 
                         cursor={{ fill: 'rgba(0, 0, 0, 0.05)' }}
-                        formatter={(value: number) => [value, yAxis?.name || "Value"]} 
+                        formatter={(value: number | any) => [value, yAxis?.name || "Value"]} 
                     />
                     <Bar dataKey="value" radius={[4, 4, 0, 0]}>
                         {barData.map((entry, index) => (
