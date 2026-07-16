@@ -1,5 +1,5 @@
 import type {Metadata} from 'next';
-import '../styles/globals.scss'; // Import global SCSS styles
+import '../styles/globals.scss';
 import { Inter, JetBrains_Mono } from 'next/font/google';
 
 const inter = Inter({
