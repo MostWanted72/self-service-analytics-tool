@@ -116,41 +116,41 @@ const LineChart = ({ dataset }: LineChartProps) => {
                     margin={{ top: 20, right: 30, left: 30, bottom: 25 }}
                 >
                     <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#eee" />
-                    <XAxis 
-                        dataKey="name" 
+                    <XAxis
+                        dataKey="name"
                         tick={{ fontSize: 12 }}
                         tickLine={false}
                         // scale="point" separates the first dot from the chart wall
-                        scale="point" 
+                        scale="point"
                         padding={{ left: 30, right: 30 }}
                     >
-                        <Label 
-                            value={xAxis?.name} 
-                            offset={-15} 
-                            position="insideBottom" 
+                        <Label
+                            value={xAxis?.name}
+                            offset={-15}
+                            position="insideBottom"
                             style={{ textAnchor: 'middle', fontSize: 13, fontWeight: 500, fill: '#666' }}
                         />
                     </XAxis>
-                    <YAxis 
+                    <YAxis
                         tick={{ fontSize: 12 }}
                         tickLine={false}
                         axisLine={false}
                     >
-                        <Label 
-                            value={yAxis?.name} 
-                            angle={-90} 
-                            position="insideLeft" 
+                        <Label
+                            value={yAxis?.name}
+                            angle={-90}
+                            position="insideLeft"
                             offset={-10}
                             style={{ textAnchor: 'middle', fontSize: 13, fontWeight: 500, fill: '#666' }}
                         />
                     </YAxis>
-                    <Tooltip 
-                        formatter={(value: number) => [value, yAxis?.name || "Value"]} 
+                    <Tooltip
+                        formatter={(value) => [value, yAxis?.name || "Value"]}
                     />
-                    <Line 
-                        type="monotone" 
-                        dataKey="value" 
-                        stroke="#0088FE" 
+                    <Line
+                        type="monotone"
+                        dataKey="value"
+                        stroke="#0088FE"
                         strokeWidth={2}
                         activeDot={{ r: 6 }}
                         dot={{ r: 4 }}

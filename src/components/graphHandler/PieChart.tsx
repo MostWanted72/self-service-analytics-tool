@@ -1,5 +1,5 @@
 import { useChartStore } from "@/store/chartStore";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
     PieChart as RechartsPie,
     Pie,
@@ -32,15 +32,16 @@ interface GroupMetrics {
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#8884d8", "#82ca9d", "#ffc658"];
 
 const PieChart = ({ dataset }: PieChartProps) => {
-    const [pieData, setPieData] = useState<PieItem[]>([]);
     const { xAxis, yAxis, aggregation } = useChartStore() as {
         xAxis: any;
         yAxis: any;
         aggregation: 'SUM' | 'AVG' | 'COUNT' | 'MIN' | 'MAX';
     };
+    const [pieData, setPieData] = useState<PieItem[]>([]);
 
 
     useEffect(() => {
+        // Guard conditions
         if (!xAxis?.name || !yAxis?.name) {
             setPieData([]);
             return;
@@ -51,6 +52,7 @@ const PieChart = ({ dataset }: PieChartProps) => {
             return;
         }
 
+        // Group records by X-axis value
         const groupedMap: Record<string, GroupMetrics> = {};
 
         dataset.forEach((row) => {
@@ -65,34 +67,42 @@ const PieChart = ({ dataset }: PieChartProps) => {
                     sum: 0,
                     count: 0,
                     min: yValue,
-                    max: yValue
+                    max: yValue,
                 };
             }
 
             const current = groupedMap[xValue];
+
             current.sum += yValue;
             current.count += 1;
-            if (yValue < current.min) current.min = yValue;
-            if (yValue > current.max) current.max = yValue;
+            current.min = Math.min(current.min, yValue);
+            current.max = Math.max(current.max, yValue);
         });
 
+        // Apply selected aggregation
         let totalChartValue = 0;
+
         const finalizedGroups = Object.entries(groupedMap).map(([name, metrics]) => {
             let finalizedValue = 0;
 
             switch (aggregation) {
                 case "AVG":
-                    finalizedValue = metrics.count > 0 ? metrics.sum / metrics.count : 0;
+                    finalizedValue =
+                        metrics.count > 0 ? metrics.sum / metrics.count : 0;
                     break;
+
                 case "COUNT":
                     finalizedValue = metrics.count;
                     break;
+
                 case "MIN":
                     finalizedValue = metrics.min;
                     break;
+
                 case "MAX":
                     finalizedValue = metrics.max;
                     break;
+
                 case "SUM":
                 default:
                     finalizedValue = metrics.sum;
@@ -100,25 +110,26 @@ const PieChart = ({ dataset }: PieChartProps) => {
             }
 
             totalChartValue += finalizedValue;
-            return { name, rawValue: finalizedValue };
+
+            return {
+                name,
+                rawValue: finalizedValue,
+            };
         });
 
-        // 3. Compute the relative distribution percentage (2 decimal places)
+        // Convert aggregated values into percentages
         const processedData: PieItem[] = finalizedGroups
-            .map(({ name, rawValue }) => {
-                const percentage = totalChartValue > 0
-                    ? Number(((rawValue / totalChartValue) * 100).toFixed(2))
-                    : 0;
-
-                return {
-                    name,
-                    value: percentage
-                };
-            })
-            .filter(item => item.value > 0);
+            .map(({ name, rawValue }) => ({
+                name,
+                value:
+                    totalChartValue > 0
+                        ? Number(((rawValue / totalChartValue) * 100).toFixed(2))
+                        : 0,
+            }))
+            .filter((item) => item.value > 0);
 
         setPieData(processedData);
-    }, [dataset, xAxis?.name, yAxis?.name, aggregation]);
+    }, [dataset, xAxis, yAxis, aggregation]);
 
     return (
         <div style={{ width: "100%", height: 350, minWidth: 300 }}>
@@ -141,7 +152,9 @@ const PieChart = ({ dataset }: PieChartProps) => {
                             />
                         ))}
                     </Pie>
-                    <Tooltip formatter={(value: number | any) => [`${value}%`, "Share"]} />
+                    <Tooltip
+                        formatter={(value) => [`${value}%`, "Share"]}
+                    />
                     <Legend verticalAlign="bottom" height={36} />
                 </RechartsPie>
             </ResponsiveContainer>
