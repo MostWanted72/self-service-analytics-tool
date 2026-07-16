@@ -1,6 +1,6 @@
 # Self-Service Analytics Tool
 
-A modern browser-based analytics workspace built with **Next.js**, **TypeScript**, and **React** that enables users to upload CSV files, inspect dataset quality, and build interactive visualizations through a drag-and-drop interface—without requiring SQL or programming knowledge.
+A modern self-service analytics platform built with Next.js, React, and TypeScript that enables users to upload CSV datasets, automatically profile their data, and build interactive visualizations through an intuitive drag-and-drop interface—all without writing SQL or code.
 
 ---
 
@@ -101,19 +101,19 @@ Different filter controls are automatically selected based on the field type.
 
 ### Landing Page
 
-![Landing Page](./screenshots/upload-page.png)
+![Landing Page](image-4.png)
 
 ### Dataset Profile
 
-![Dataset Profile](./screenshots/dataset-profile.png)
+![Dataset Profile](image-2.png)
 
 ### Explore Workspace
 
-![Explore Workspace](./screenshots/explore-workspace.png)
+![Explore Workspace](image-6.png)
 
-### Chart Builder
+### Dataset Preview
 
-![Chart Builder](./screenshots/chart-builder.png)
+![Dataset Preview](image-7.png)
 
 ---
 
@@ -255,12 +255,5 @@ Future enhancements may include:
 - AI-assisted insights
 
 ---
-
-## ScreenShots 
-![alt text](image-4.png)
-![alt text](image.png)
-![alt text](image-1.png)
-![alt text](image-2.png)
-![alt text](image-3.png)
 
 This project was created for educational and portfolio purposes.
