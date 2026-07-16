@@ -1,87 +1,266 @@
 # Self-Service Analytics Tool
 
-This project is a modern analytics workspace built with Next.js and TypeScript. It allows users to upload CSV files, inspect dataset profiles, and explore charts through a simple browser-based experience.
+A modern browser-based analytics workspace built with **Next.js**, **TypeScript**, and **React** that enables users to upload CSV files, inspect dataset quality, and build interactive visualizations through a drag-and-drop interface—without requiring SQL or programming knowledge.
+
+---
 
 ## Overview
 
-The app is designed for quick self-service analysis:
+The application provides a lightweight self-service analytics experience inspired by modern BI tools.
 
-- Upload a CSV file from the home page
-- Review dataset structure, quality, and summary metrics
-- Explore visualizations using a drag-and-drop studio experience
-- Work entirely in the browser without needing SQL or coding
+Users can:
+
+- Upload CSV datasets
+- Automatically profile uploaded data
+- Detect Dimensions and Metrics
+- Review dataset quality and statistics
+- Build visualizations using drag-and-drop
+- Filter data interactively
+- Aggregate metrics
+- Explore data entirely inside the browser
+
+All data processing is performed client-side, ensuring privacy and fast interaction.
+
+---
+
+## Features
+
+### CSV Upload
+
+- Drag & Drop upload
+- File picker support
+- CSV validation
+- Malformed CSV detection
+- Duplicate column detection
+- User-friendly validation messages
+
+---
+
+### Dataset Profile
+
+Automatically analyzes uploaded datasets and displays:
+
+- Total Rows
+- Total Columns
+- Dataset Size
+- Number of Dimensions
+- Number of Metrics
+- Missing Values Summary
+- Metrics Summary
+- Dimensions Summary
+- Data Quality Overview
+
+---
+
+### Explore Workspace
+
+Interactive chart builder supporting:
+
+- Drag & Drop fields
+- Dynamic chart updates
+- Interactive filters
+- Automatic aggregation
+
+Supported Charts
+
+- Bar Chart
+- Line Chart
+- Pie Chart
+
+Supported Aggregations
+
+- SUM
+- AVG
+- COUNT
+- MIN
+- MAX
+
+---
+
+### Filters
+
+Different filter controls are automatically selected based on the field type.
+
+**Dimensions**
+
+- Multi-select checkbox filters
+
+**Metrics**
+
+- Minimum value
+- Maximum value
+
+**Dates**
+
+- Start Date
+- End Date
+
+---
+
+## Screenshots
+
+### Landing Page
+
+![Landing Page](./screenshots/upload-page.png)
+
+### Dataset Profile
+
+![Dataset Profile](./screenshots/dataset-profile.png)
+
+### Explore Workspace
+
+![Explore Workspace](./screenshots/explore-workspace.png)
+
+### Chart Builder
+
+![Chart Builder](./screenshots/chart-builder.png)
+
+---
+
+## Tech Stack
+
+### Frontend
+
+- Next.js (App Router)
+- React
+- TypeScript
+- SCSS Modules
+
+### State Management
+
+- Zustand
+
+### Charts
+
+- Recharts
+
+### Drag & Drop
+
+- dnd-kit
+
+### CSV Parsing
+
+- PapaParse
+
+### UI
+
+- Lucide React
+- Framer Motion
+
+---
+
+## Project Structure
+
+```text
+src/
+│
+├── app/                     # Application routes
+│   ├── page.tsx             # Landing page (CSV Upload)
+│   ├── insights/            # Dataset insights overview
+│   └── studio/              # Dataset profile & analytics workspace
+│
+├── components/              # Reusable UI and feature components
+│
+├── features/                # CSV parsing, validation and analytics
+│
+├── store/                   # Zustand stores
+│
+├── types/                   # Shared TypeScript types
+│
+├── hooks/                   # Custom React hooks
+│
+├── utils/                   # Utility functions
+│
+└── styles/                  # Global styles
+```
+
+---
+
+## Application Flow
+
+```text
+CSV Upload
+      │
+      ▼
+CSV Validation
+      │
+      ▼
+Dataset Profiling
+      │
+      ▼
+Dataset Store
+      │
+      ├──────────────► Dataset Profile
+      │
+      └──────────────► Explore Workspace
+                           │
+                           ▼
+                     Apply Filters
+                           │
+                           ▼
+                     Aggregate Data
+                           │
+                           ▼
+                     Render Charts
+```
+
+---
 
 ## Getting Started
 
 ### Prerequisites
 
-- Node.js 18 or newer
+- Node.js 18+
 - npm
 
-### Install dependencies
+### Install
 
 ```bash
 npm install
 ```
 
-### Run locally
+### Development
 
 ```bash
 npm run dev
 ```
 
-Then open [http://localhost:3000](http://localhost:3000) in your browser.
+Open:
 
-### Production build
+```
+http://localhost:3000
+```
+
+### Production
 
 ```bash
 npm run build
 npm run start
 ```
 
-## Project Structure
+---
 
-```text
-src/
-  app/                # App routes and page layouts
-    page.tsx          # Landing page for CSV upload
-    insights/         # Dataset insights overview
-    studio/           # Dataset profile and exploration workspace
-  components/         # Reusable UI and feature components
-  features/           # CSV parsing, validation, analytics, and chart logic
-  store/              # Zustand state for datasets and chart configuration
-  types/              # Shared TypeScript types
-```
+## Current Scope
 
-## Main Pages
+The current implementation focuses on delivering a complete end-to-end analytics workflow.
 
-### Home page
-The landing page lets users upload a CSV file and begin the analysis flow.
+Future enhancements may include:
 
-### Insights page
-Shows a quick dataset summary, including row and column counts, schema classification, and sample values.
+- Group By
+- Additional chart types
+- Dashboard saving
+- Export functionality
+- Virtualized tables
+- Large dataset optimization
+- AI-assisted insights
 
-### Studio page
-Provides a deeper dataset profile experience with overview cards, data quality insights, dimensions, and metrics summaries.
+---
 
-### Studio / Explore
-This is the interactive chart-building workspace where users can drag dimensions and metrics into visual analysis areas, apply filters, and generate charts.
+## ScreenShots 
+![alt text](image-4.png)
+![alt text](image.png)
+![alt text](image-1.png)
+![alt text](image-2.png)
+![alt text](image-3.png)
 
-## Key Features
-
-- CSV upload and parsing
-- Automatic column type detection
-- Dataset profile insights
-- Drag-and-drop analytics exploration
-- Interactive charts and filters
-
-## Development Notes
-
-The app uses:
-
-- Next.js for routing and app structure
-- React for the UI
-- Zustand for state management
-- SCSS modules for component styling
-
-If you want to contribute, start with the main app routes in the src/app folder and follow the existing component and feature organization.
+This project was created for educational and portfolio purposes.
