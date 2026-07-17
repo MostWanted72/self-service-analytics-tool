@@ -36,6 +36,7 @@ interface FilterObject {
 }
 
 // Main handler that applies all active filter blocks together
+// Main handler that applies all active filter blocks together
 const processDatasetFilters = (
     dataset: Dataset | null | undefined,
     filters: FilterObject[] | null | undefined
@@ -53,35 +54,73 @@ const processDatasetFilters = (
             // 1. DATE RANGE FILTER
             if (filter.startDate && filter.endDate) {
                 if (typeof cellValue !== "string") return false;
+
                 const rowDate = new Date(cellValue);
                 const start = new Date(filter.startDate);
                 const end = new Date(filter.endDate);
+
                 if (isNaN(rowDate.getTime())) return false;
+
                 return rowDate >= start && rowDate <= end;
             }
 
-            // 2. NUMERIC RANGE FILTER (minVal or maxVal exist and are not empty strings)
+            // 2. NUMERIC RANGE FILTER (metrics)
             const hasMin = filter.minVal !== null && filter.minVal !== "";
             const hasMax = filter.maxVal !== null && filter.maxVal !== "";
 
             if (hasMin || hasMax) {
-                if (cellValue === undefined || cellValue === null || cellValue === "") return false;
+                if (
+                    cellValue === undefined ||
+                    cellValue === null ||
+                    cellValue === ""
+                ) {
+                    return false;
+                }
+
                 const numericValue = Number(cellValue);
+
                 if (isNaN(numericValue)) return false;
 
-                if (hasMin && numericValue < Number(filter.minVal)) return false;
-                if (hasMax && numericValue > Number(filter.maxVal)) return false;
+                if (hasMin && numericValue < Number(filter.minVal)) {
+                    return false;
+                }
+
+                if (hasMax && numericValue > Number(filter.maxVal)) {
+                    return false;
+                }
+
                 return true;
             }
 
-            // 3. CHECKBOX / MULTI-SELECT FILTER
+            // 3. MULTI SELECT FILTER
+            // Works for:
+            // - Dimensions
+            // - Boolean values (true/false, yes/no, 0/1)
             if (filter.selectedValues && filter.selectedValues.length > 0) {
-                if (cellValue === undefined || cellValue === null) return false;
-                // Standardize comparison to strings to cleanly capture categorical matches
-                return filter.selectedValues.map(String).includes(String(cellValue));
+                if (
+                    cellValue === undefined ||
+                    cellValue === null
+                ) {
+                    return false;
+                }
+
+                const normalizedCellValue = String(cellValue)
+                    .trim()
+                    .toLowerCase();
+
+                const normalizedSelectedValues = filter.selectedValues.map(
+                    (value) =>
+                        String(value)
+                            .trim()
+                            .toLowerCase()
+                );
+
+                return normalizedSelectedValues.includes(
+                    normalizedCellValue
+                );
             }
 
-            // Fallback if the individual filter block is empty/inactive
+            // 4. No active conditions
             return true;
         });
     });
