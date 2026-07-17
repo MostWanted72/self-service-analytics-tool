@@ -209,7 +209,7 @@ export const UploadDropzone: React.FC = () => {
             <p className={styles.primaryText}>
               Drag & drop your CSV file here
             </p>
-            
+
             <span className={styles.secondaryText}>or</span>
 
             <Button
@@ -229,6 +229,9 @@ export const UploadDropzone: React.FC = () => {
               <CheckCircle2 className={styles.checkIcon} aria-hidden="true" />
               <span>Supported format: CSV (.csv)</span>
             </div>
+            <p className={styles.sizeNote}>
+              Recommended CSV size: up to <strong>3 MB</strong> for the best experience.
+            </p>
           </motion.div>
         )}
       </AnimatePresence>

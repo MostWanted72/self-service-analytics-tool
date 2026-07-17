@@ -73,6 +73,16 @@ export function validateCSVData(
     };
   }
 
+  // 4. Size validation (3 MB limit)
+  const MAX_FILE_SIZE = 3 * 1024 * 1024; // 3 MB
+
+  if (fileSize > MAX_FILE_SIZE) {
+    return {
+      isValid: false,
+      error: "Please upload a CSV file smaller than 3 MB.",
+    };
+  }
+
   return { isValid: true };
 }
 

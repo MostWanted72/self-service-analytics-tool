@@ -137,6 +137,18 @@
   letter-spacing: 0.05em;
 }
 
+.sizeNote {
+  margin-top: 0.75rem;
+  font-size: 0.85rem;
+  color: #b45309; // Amber-700 (softer than red)
+  text-align: center;
+  line-height: 1.4;
+
+  strong {
+    font-weight: 600;
+  }
+}
+
 .tertiaryText {
   font-size: 0.875rem;
   color: var(--color-text-secondary);
