@@ -85,11 +85,8 @@
 }
 
 .resetButton {
-  @media (max-width: 580px) {
-    span {
-      display: none; /* Hide text on mobile but keep icon if possible */
-    }
-    /* Let's keep it visible but simpler */
+  @media (max-width: 1023px) {
+    display: none;
   }
 }
 
