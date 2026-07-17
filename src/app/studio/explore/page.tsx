@@ -396,8 +396,6 @@ export default function ExplorePage() {
     return () => window.removeEventListener("resize", checkScreenSize);
   }, []);
 
-  console.log('check this part', isDesktop)
-
   // Setup sensors for dragging (using pointer sensor with activation constraint to allow clicking)
   const sensors = useSensors(
     useSensor(PointerSensor, {
