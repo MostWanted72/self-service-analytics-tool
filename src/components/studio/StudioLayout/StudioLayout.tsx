@@ -16,7 +16,11 @@ interface StudioLayoutProps {
 
 export const StudioLayout: React.FC<StudioLayoutProps> = ({ children }) => {
   const router = useRouter();
-  const { dataset } = useDatasetStore();
+  const { dataset, hasHydrated } = useDatasetStore();
+
+  if (!hasHydrated) {
+    return null;
+  }
 
   return (
     <div className={styles.wrapper} id="studio-layout-wrapper">

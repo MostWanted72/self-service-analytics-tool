@@ -383,6 +383,20 @@ export default function ExplorePage() {
   // Local state to track which field type is currently being dragged
   const [activeType, setActiveType] = useState<'Dimension' | 'Metric' | null>(null);
   const [activeDragColumn, setActiveDragColumn] = useState<Column | null>(null);
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsDesktop(window.innerWidth >= 1024);
+    };
+
+    checkScreenSize(); // Initial check
+
+    window.addEventListener("resize", checkScreenSize);
+    return () => window.removeEventListener("resize", checkScreenSize);
+  }, []);
+
+  console.log('check this part', isDesktop)
 
   // Setup sensors for dragging (using pointer sensor with activation constraint to allow clicking)
   const sensors = useSensors(
@@ -413,13 +427,13 @@ export default function ExplorePage() {
   const metricsCount = metrics.length;
 
   // Filter out fields that are already dropped in the axis or filters zones (unconditional)
-const availableDimensions = React.useMemo(() => {
-  return dimensions;
-}, [dimensions]);
+  const availableDimensions = React.useMemo(() => {
+    return dimensions;
+  }, [dimensions]);
 
-const availableMetrics = React.useMemo(() => {
-  return metrics;
-}, [metrics]);
+  const availableMetrics = React.useMemo(() => {
+    return metrics;
+  }, [metrics]);
 
   // 1. Filter the dataset based on active filters (unconditional)
   const filteredRows = React.useMemo(() => {
@@ -488,6 +502,91 @@ const availableMetrics = React.useMemo(() => {
 
     return 'Text';
   };
+
+  if (!isDesktop) {
+    return (
+      <div
+        style={{
+          minHeight: "70vh",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          padding: "2rem",
+        }}
+      >
+        <div
+          style={{
+            width: "100%",
+            maxWidth: "560px",
+            background: "#fff",
+            borderRadius: "20px",
+            padding: "3rem",
+            textAlign: "center",
+            border: "1px solid #e5e7eb",
+            boxShadow:
+              "0 10px 40px rgba(15, 23, 42, 0.08), 0 2px 8px rgba(15, 23, 42, 0.04)",
+          }}
+        >
+          <div
+            style={{
+              fontSize: "3.5rem",
+              marginBottom: "1rem",
+            }}
+          >
+            💻
+          </div>
+
+          <h1
+            style={{
+              margin: 0,
+              fontSize: "2rem",
+              fontWeight: 700,
+              color: "#111827",
+            }}
+          >
+            Desktop Experience Recommended
+          </h1>
+
+          <p
+            style={{
+              marginTop: "1.25rem",
+              fontSize: "1rem",
+              lineHeight: 1.7,
+              color: "#4b5563",
+            }}
+          >
+            <strong>Insight Studio's Explore workspace</strong> is currently optimized
+            for desktop screens with a minimum width of <strong>1024px</strong>.
+          </p>
+
+          <p
+            style={{
+              marginTop: "0.75rem",
+              fontSize: "0.95rem",
+              color: "#6b7280",
+            }}
+          >
+            The drag-and-drop analytics builder, interactive charts, and data
+            exploration tools provide the best experience on a desktop or laptop.
+          </p>
+
+          <div
+            style={{
+              marginTop: "2rem",
+              display: "inline-block",
+              padding: "0.75rem 1.5rem",
+              background: "#2563eb",
+              color: "#fff",
+              borderRadius: "999px",
+              fontWeight: 600,
+            }}
+          >
+            Please switch to a desktop device
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   // Render correct full-screen empty state if dataset is insufficient
   if (dimensionsCount === 0 && metricsCount === 0) {
